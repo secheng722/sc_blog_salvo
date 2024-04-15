@@ -3,9 +3,11 @@
 {% block blog %}
 <div class="block pt-12 md:flex">
     <div class="pb-6  md:w-full md:max-w-150px md:p-0">
-        <h2 class='font-xs font-light tracking-widest text-sm text-gray-600 leading-normal uppercase'>ABOUT ME</h2>
+        <h2
+            class='font-xs font-light tracking-widest text-sm text-gray-600  dark:text-gray-400  leading-normal uppercase'>
+            ABOUT ME</h2>
     </div>
-    <div class='flex-none text-lg text-gray-600 font-light md:flex-1 md:pl-20'>
+    <div class='flex-none text-lg text-gray-600 dark:text-gray-400 font-light md:flex-1 md:pl-20'>
         <div class="mb-6">
             <p>
                 Hi, I'm SeCheng, a software engineer from China.
@@ -16,14 +18,16 @@
 </div>
 <div class="block pt-12 md:flex">
     <div class="pb-6 md:w-full md:max-w-150px md:p-0">
-        <h2 class='font-xs font-light tracking-widest text-sm text-gray-600 leading-normal uppercase'>
+        <h2
+            class='font-xs font-light tracking-widest text-sm text-gray-600  dark:text-gray-400  leading-normal uppercase'>
             LATEST POSTS
         </h2>
     </div>
-    <div class='flex-none text-lg text-gray-600 font-light md:flex-1 md:pl-20'>
+    <div class='flex-none text-lg text-gray-600   dark:text-gray-400  font-light md:flex-1 md:pl-20'>
         {% for post in posts %}
         <div class="mb-6">
-            <h3 class="font-semibold text-gray-900 pb-1 hover:underline hover:text-black">
+            <h3
+                class="font-semibold text-gray-900  dark:text-gray-200  pb-1 hover:underline hover:text-black hover:dark:text-white">
                 <a href="/post/{{post.key}}">
                     {{post.title}}
                 </a>
@@ -38,9 +42,11 @@
 
 <div class="block pt-12 md:flex">
     <div class="pb-6 md:w-full md:max-w-150px md:p-0">
-        <h2 class='font-xs font-light tracking-widest text-sm text-gray-600 leading-normal uppercase'>SKILLS</h2>
+        <h2
+            class='font-xs font-light tracking-widest text-sm text-gray-600 dark:text-gray-400  leading-normal uppercase'>
+            SKILLS</h2>
     </div>
-    <div class='flex-none text-lg text-gray-600 font-light md:flex-1 md:pl-20'>
+    <div class='flex-none text-lg text-gray-600  dark:text-gray-400  font-light md:flex-1 md:pl-20'>
         <div class="mb-6">
             <ul>
                 <li class="mb-6">A Little JavaScript,HTML/CSS,VUE,😅</li>

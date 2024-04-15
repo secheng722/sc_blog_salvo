@@ -45,7 +45,6 @@ pub fn render_md_to_html(name: &str) -> Result<MdContent> {
             .collect::<Vec<String>>()
             .join("\n");
         let content = markdown::to_html(&content);
-        tracing::info!("content: {:?}", content);
         Ok(MdContent {
             title,
             date,
