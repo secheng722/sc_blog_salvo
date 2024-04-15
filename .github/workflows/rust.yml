@@ -24,4 +24,5 @@ jobs:
       uses: softprops/action-gh-release@v1
       with:
         files: target/release/sc_blog_salvo
+        tag_name: 0.0.1
 
