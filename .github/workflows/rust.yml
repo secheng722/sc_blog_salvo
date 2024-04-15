@@ -24,10 +24,9 @@ jobs:
         run: cargo build --verbose --release
       - name: Generate release tag
         id: tag
-        run: |
-          echo "::set-output name=release_tag::UserBuild_$(date +"%Y.%m.%d_%H-%M")"
+        run: echo ::set-output name=release_tag::$(date +'%Y%m%d%H%M%S')
       - name: Release
         uses: softprops/action-gh-release@v1
         with:
-          files: target/ubuntu-latest/release/sc_blog_salvo
+          files: /home/runner/work/sc_blog_salvo/sc_blog_salvo/target/release/sc_blog_salvo
           tag_name: ${{ steps.tag.outputs.release_tag }}
