@@ -10,7 +10,7 @@ env:
   CARGO_TERM_COLOR: always
 
 jobs:
-  build:
+  build-and-upload:
 
     runs-on: ubuntu-latest
 
@@ -20,3 +20,8 @@ jobs:
       run: cargo build --verbose
     - name: Run tests
       run: cargo test --verbose
+    - name: Release
+      uses: softprops/action-gh-release@v1
+      with:
+        files: target/release/sc_blog_salvo
+
