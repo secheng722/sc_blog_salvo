@@ -44,7 +44,7 @@ async fn handle_img(req: &mut Request, res: &mut Response) {
     tracing::info!("img_name: {}", name);
     let res_body = ResBody::from(fs_helper::read_to_bytes(&format!("assert/images/{}", name)));
     res.headers_mut()
-        .insert("Content-Type", HeaderValue::from_static("image/png"));
+        .insert("Content-Type", HeaderValue::from_static("image/jpeg"));
     res.body(res_body);
 }
 
