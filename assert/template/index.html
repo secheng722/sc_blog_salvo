@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block blog %}
+<div class="block pt-12 md:flex">
+    <div class="pb-6  md:w-full md:max-w-150px md:p-0">
+        <h2 class='font-xs font-light tracking-widest text-sm text-gray-600 leading-normal uppercase'>ABOUT ME</h2>
+    </div>
+    <div class='flex-none text-lg text-gray-600 font-light md:flex-1 md:pl-20'>
+        <div class="mb-6">
+            <p>
+                Hi, I'm SeCheng, a software engineer from China.
+            </p>
+        </div>
+
+    </div>
+</div>
+<div class="block pt-12 md:flex">
+    <div class="pb-6 md:w-full md:max-w-150px md:p-0">
+        <h2 class='font-xs font-light tracking-widest text-sm text-gray-600 leading-normal uppercase'>
+            LATEST POSTS
+        </h2>
+    </div>
+    <div class='flex-none text-lg text-gray-600 font-light md:flex-1 md:pl-20'>
+        {% for post in posts %}
+        <div class="mb-6">
+            <h3 class="font-semibold text-gray-900 pb-1 hover:underline hover:text-black">
+                <a href="/post/{{post.key}}">
+                    {{post.title}}
+                </a>
+            </h3>
+            <p class="text-md text-gray-600 font-light">
+                {{post.description}}
+            </p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<div class="block pt-12 md:flex">
+    <div class="pb-6 md:w-full md:max-w-150px md:p-0">
+        <h2 class='font-xs font-light tracking-widest text-sm text-gray-600 leading-normal uppercase'>SKILLS</h2>
+    </div>
+    <div class='flex-none text-lg text-gray-600 font-light md:flex-1 md:pl-20'>
+        <div class="mb-6">
+            <ul>
+                <li class="mb-6">A Little JavaScript,HTML/CSS,VUE,😅</li>
+                <li>A Little Java, C# Or Rust?😄</li>
+            </ul>
+        </div>
+    </div>
+
+    {% endblock blog %}

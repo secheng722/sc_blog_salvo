@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block blog %}
+<article class=" py-8 prose prose-h2:text-indigo-500 prose-a:text-teal-600 prose-a:cursor-pointer
+hover:prose-a:text-teal-500 prose-img:rounded-2xl prose-img:shadow-2xl prose-pre:bg-indigo-100 prose-pre:text-indigo-800
+prose-video:h-96 prose-p:italic prose-p:text-lg prose-headings:underline">
+    <h1>{{post.title}}</h1>
+    <p class='text-gray-600 font-light'>
+        Posted on {{post.date}}
+    </p>
+    <div class="mt-16">
+        {{ post.content | safe }}
+    </div>
+</article>
+{% endblock blog %}

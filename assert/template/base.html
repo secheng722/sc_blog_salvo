@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/assert/css/distmain.css" />
+
+    <title>MyBlog</title>
+</head>
+
+<body>
+    <div id="app" class="relative">
+        {% block svg %}
+        {% include "_svg.html" %}
+        {% endblock svg %}
+        <div class="p-20 relative max-w-screen-xl xs:p-24">
+            {% block header %}
+            {% include "_header.html" %}
+            {% endblock header %}
+            {% block blog %}
+            {% endblock blog %}
+        </div>
+    </div>
+</body>
+
+
+</html>

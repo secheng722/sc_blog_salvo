@@ -1,0 +1,19 @@
+[package]
+name = "sc_blog_salvo"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+anyhow = "1.0.82"
+lazy_static = "1.4.0"
+markdown = "0.3.0"
+salvo = "0.66.2"
+serde = "1.0.197"
+serde_json = "1.0.115"
+serde_yaml = "0.9.34"
+tera = "1.19.1"
+tokio = { version = "1.37.0", features = ["macros"] }
+tracing = "0.1.40"
+tracing-subscriber = "0.3.18"
