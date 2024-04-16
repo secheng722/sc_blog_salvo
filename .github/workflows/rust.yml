@@ -25,6 +25,7 @@ jobs:
       - name: Build
         run: cargo build --verbose --release
       - name: set file path
+        id: paths
         run: |
           if [["${{matrix.os}}" =="ubuntu-latest"]];  then
             echo "::set-output name=release_file1::/home/runner/work/sc_blog_salvo/sc_blog_salvo/target/release/sc_blog_salvo"
@@ -40,8 +41,7 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           files: |
-            ${{ steps.set file path.outputs.release_file1 }}
-            ${{ steps.set file path.outputs.release_file2 }}
-            ${{ steps.set file path.outputs.release_file3 }}
-          tag_name: ${{ steps.tag.outputs.release_tag }}- name: Release
-  uses: softprops/action
+            ${{ steps.paths.outputs.release_file1 }}
+            ${{ steps.paths.outputs.release_file2 }}
+            ${{ steps.paths.outputs.release_file3 }}
+          tag_name: ${{ steps.tag.outputs.release_tag }}
