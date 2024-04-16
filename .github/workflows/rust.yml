@@ -15,18 +15,33 @@ permissions:
 jobs:
   build-and-upload:
     name: Build and upload
-    runs-on: ubuntu-latest
-
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
 
     steps:
       - uses: actions/checkout@v3
       - name: Build
         run: cargo build --verbose --release
+      - name: set file path
+        run: |
+          if [["${{matrix.os}}" =="ubuntu-latest"]];  then
+            echo "::set-output name=release_file1::/home/runner/work/sc_blog_salvo/sc_blog_salvo/target/release/sc_blog_salvo"
+          elif [["${{matrix.os}}" =="macos-latest"]];  then
+            echo "::set-output name=release_file2::/Users/runner/work/sc_blog_salvo/sc_blog_salvo/target/release/sc_blog_salvo"
+          else
+            echo "::set-output name=release_file3::/Users/runner/work/sc_blog_salvo/sc_blog_salvo/target/release/sc_blog_salvo.exe"
+          fi
       - name: Generate release tag
         id: tag
         run: echo ::set-output name=release_tag::$(date +'%Y%m%d%H%M%S')
-      - name: Release
+      - name: Release ubuntu
         uses: softprops/action-gh-release@v1
         with:
-          files: /home/runner/work/sc_blog_salvo/sc_blog_salvo/target/release/sc_blog_salvo
-          tag_name: ${{ steps.tag.outputs.release_tag }}
+          files: |
+            ${{ steps.set file path.outputs.release_file1 }}
+            ${{ steps.set file path.outputs.release_file2 }}
+            ${{ steps.set file path.outputs.release_file3 }}
+          tag_name: ${{ steps.tag.outputs.release_tag }}- name: Release
+  uses: softprops/action
