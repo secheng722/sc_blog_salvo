@@ -1,12 +1,13 @@
-use lazy_static::lazy_static;
 use salvo::http::ResBody;
 use salvo::prelude::*;
 use salvo::{catcher::Catcher, http::HeaderValue};
 use sc_blog_salvo::fs_helper::{
     self, md_helper::render_md_to_catalog, md_helper::render_md_to_html,
 };
+use sqlx::{query, SqlitePool};
 use std::sync::Arc;
 use tera::{Context, Tera};
+use tokio::sync::{OnceCell, RwLock};
 
 #[handler]
 async fn handle_404(res: &mut Response, ctrl: &mut FlowCtrl) {
@@ -50,8 +51,10 @@ async fn handle_img(req: &mut Request, res: &mut Response) {
 
 #[handler]
 async fn blog_list(res: &mut Response) {
-    //使用tera模版引擎
-    let tera = TERA.clone();
+    let tera = TERA
+        .get()
+        .ok_or(anyhow::anyhow!("Failed to get tera"))
+        .unwrap();
     let md_info = render_md_to_catalog().expect("Failed to render md to catalog");
     let mut ctx = Context::new();
     ctx.insert("posts", &md_info);
@@ -64,7 +67,10 @@ async fn blog_list(res: &mut Response) {
 #[handler]
 async fn blog_article(req: &mut Request, res: &mut Response) {
     let name = req.param("name").unwrap_or("index");
-    let tera = TERA.clone();
+    let tera = TERA
+        .get()
+        .ok_or(anyhow::anyhow!("Failed to get tera"))
+        .unwrap();
     let mut ctx = Context::new();
     let md_content = render_md_to_html(name).expect("Failed to render md to html");
     ctx.insert("post", &md_content);
@@ -74,16 +80,25 @@ async fn blog_article(req: &mut Request, res: &mut Response) {
     res.render(Text::Html(rendered));
 }
 
-lazy_static! {
-    static ref TERA: Arc<Tera> = {
-        let tera = Tera::new("assert/template/*").expect("Failed to compile templates");
-        Arc::new(tera)
-    };
+static TERA: OnceCell<Arc<Tera>> = OnceCell::const_new();
+static DB: OnceCell<Arc<SqlitePool>> = OnceCell::const_new();
+
+async fn init_tera() {
+    let tera = Tera::new("assert/template/*").expect("Failed to compile templates");
+    TERA.get_or_init(|| async { Arc::new(tera) }).await;
 }
 
+async fn init_db() {
+    let pool = SqlitePool::connect("sqlite:assert/db/blog.db")
+        .await
+        .expect("Failed to connect to db");
+    DB.get_or_init(|| async { Arc::new(pool) }).await;
+}
 #[tokio::main]
 async fn main() {
     tracing_subscriber::fmt().init();
+    init_tera().await;
+    init_db().await;
     let router = Router::new()
         .get(blog_list)
         .push(Router::with_path("/list").get(blog_list))

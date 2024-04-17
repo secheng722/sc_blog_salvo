@@ -82,3 +82,10 @@ pub struct MdContent {
     pub date: String,
     pub content: String,
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    #[test]
+    fn create_catalog_file() {}
+}
