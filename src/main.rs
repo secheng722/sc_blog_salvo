@@ -4,10 +4,10 @@ use salvo::{catcher::Catcher, http::HeaderValue};
 use sc_blog_salvo::fs_helper::{
     self, md_helper::render_md_to_catalog, md_helper::render_md_to_html,
 };
-use sqlx::{query, SqlitePool};
+use sqlx::SqlitePool;
 use std::sync::Arc;
 use tera::{Context, Tera};
-use tokio::sync::{OnceCell, RwLock};
+use tokio::sync::OnceCell;
 
 #[handler]
 async fn handle_404(res: &mut Response, ctrl: &mut FlowCtrl) {

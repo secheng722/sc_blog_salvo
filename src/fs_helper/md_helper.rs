@@ -10,7 +10,7 @@ pub fn render_md_to_catalog() -> Result<Vec<MdInfo>> {
         let reader = BufReader::new(file);
         let lines = reader.lines().skip(2);
         let mut md_info_vec = Vec::new();
-        for line in lines {
+        lines.for_each(|line| {
             if let Ok(line) = line {
                 let items: Vec<&str> = line
                     .split('|')
@@ -21,12 +21,12 @@ pub fn render_md_to_catalog() -> Result<Vec<MdInfo>> {
                     Ok(md_info) => {
                         md_info_vec.push(md_info);
                     }
-                    Err(e) => {
-                        return Err(e);
+                    _ => {
+                        tracing::error!("Failed to create MdInfo from Vec");
                     }
                 }
             }
-        }
+        });
         Ok(md_info_vec)
     } else {
         Err(anyhow::anyhow!("文件打开失败"))
@@ -35,7 +35,7 @@ pub fn render_md_to_catalog() -> Result<Vec<MdInfo>> {
 
 pub fn render_md_to_html(name: &str) -> Result<MdContent> {
     let path = format!("assert/md/{}.md", name);
-    if let Ok(file) = std::fs::File::open(&path) {
+    if let Ok(file) = std::fs::File::open(path) {
         let reader = BufReader::new(file);
         let mut lines = reader.lines();
         let title = lines.next().unwrap().unwrap();
@@ -85,7 +85,6 @@ pub struct MdContent {
 
 #[cfg(test)]
 mod tests {
-    use super::*;
     #[test]
     fn create_catalog_file() {}
 }

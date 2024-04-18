@@ -17,8 +17,8 @@ pub fn read_to_string(path: &str) -> String {
 
 fn read_404() -> String {
     if let Ok(content) = std::fs::read_to_string("assert/html/404.html") {
-        return content;
+        content
     } else {
-        return "Something went wrong reading the file".to_string();
+        "Something went wrong reading the file".to_string()
     }
 }
