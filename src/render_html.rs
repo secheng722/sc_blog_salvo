@@ -47,6 +47,6 @@ async fn blog_article(req: &mut Request, res: &mut Response) {
 
 pub fn html_router() -> Router {
     Router::new()
-        .push(Router::with_path("/").get(blog_list))
+        .get(blog_list)
         .push(Router::with_path("/post/<name>").get(blog_article))
 }
