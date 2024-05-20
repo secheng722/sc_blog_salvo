@@ -47,5 +47,8 @@ pub fn decode_token(token: &str) -> bool {
         &DecodingKey::from_secret(JWT_SECRET.as_ref()),
         &jsonwebtoken::Validation::new(jsonwebtoken::Algorithm::HS256),
     )
-    .is_ok()
+    .map_err(|_| anyhow::anyhow!("Failed to decode token"))
+    .unwrap()
+    .claims
+    .exp > OffsetDateTime::now_utc().unix_timestamp()
 }
