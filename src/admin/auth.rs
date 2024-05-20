@@ -1,4 +1,4 @@
-use jsonwebtoken::EncodingKey;
+use jsonwebtoken::{DecodingKey, EncodingKey};
 use salvo::{
     http::cookie::time::OffsetDateTime,
     jwt_auth::{ConstDecoder, CookieFinder, HeaderFinder, JwtAuth, QueryFinder},
@@ -39,4 +39,13 @@ pub fn jwt_middleware() -> JwtAuth<JwtClaims, ConstDecoder> {
             ])
             .force_passed(false);
     auth_handler
+}
+
+pub fn decode_token(token: &str) -> bool {
+    jsonwebtoken::decode::<JwtClaims>(
+        token,
+        &DecodingKey::from_secret(JWT_SECRET.as_ref()),
+        &jsonwebtoken::Validation::new(jsonwebtoken::Algorithm::HS256),
+    )
+    .is_ok()
 }

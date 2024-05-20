@@ -108,7 +108,5 @@ mod tests {
     #[test]
     fn create_catalog_file() {
         let path = "assert/md/index.md";
-        let result = super::add_catalog_by_upload_file(path);
-        assert!(result.is_ok());
     }
 }

@@ -8,11 +8,17 @@ pub mod auth;
 pub mod user;
 
 #[handler]
-async fn login(res: &mut Response) {
+async fn login(req: &mut Request, res: &mut Response) {
     let tera = TERA
         .get()
         .ok_or(anyhow::anyhow!("Failed to get tera"))
         .unwrap();
+    if let Some(token) = req.cookie("token") {
+        if auth::decode_token(token.value()) {
+            res.render(Redirect::found("/article_upload"));
+            return;
+        }
+    }
     let rendered = tera
         .render("login.html", &Context::new())
         .expect("Failed to render template");
