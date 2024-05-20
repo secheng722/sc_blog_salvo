@@ -2,3 +2,5 @@
 /assert/node_modules
 /target
 .DS_Store
+assert/db/blog.db
+/.idea/

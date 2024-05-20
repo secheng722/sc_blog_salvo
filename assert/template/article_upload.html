@@ -1,0 +1,25 @@
+{% extends "base.html" %} {% block blog %}
+<div class="block pt-12 md:flex">
+  <div class="pb-6 md:w-full md:max-w-150px md:p-0">
+    <form method="post" action="/article_upload" enctype="multipart/form-data" class="w-full">
+      <div class="flex items-center py-2">
+        <label
+          class=" flex flex-col items-center px-4 py-6 bg-white dark:bg-gray-800 text-blue rounded-lg shadow-lg tracking-wide uppercase border border-blue cursor-pointer hover:bg-blue hover:text-gray-600 hover:dark:text-white">
+          <svg class="w-8 h-8" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+            <path d="M9 13l-3-3a2 2 0 0 1 3-3l1 1 1-1a2 2 0 0 1 3 3l-3 3m-5 4a2 2 0 1 1 4 0" />
+          </svg>
+          <span class="mt-2 text-base leading-normal" id="selected-file">Select a file</span>
+          <input type='file' class="hidden" name="file" id="file-upload" />
+        </label>
+      </div>
+      <button type="submit" class="block w-32 h-10 bg-blue-500 text-white rounded-lg mt-4">Upload</button>
+    </form>
+  </div>
+</div>
+<script>
+  document.getElementById('file-upload').addEventListener('change', function (e) {
+    var fileName = e.target.files[0].name;
+    document.getElementById('selected-file').textContent = fileName;
+  });
+</script>
+{% endblock %}

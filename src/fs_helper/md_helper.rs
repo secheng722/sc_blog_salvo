@@ -1,4 +1,4 @@
-use std::io::{BufRead, BufReader};
+use std::io::{BufRead, BufReader, Write};
 
 use anyhow::Result;
 use serde::{Deserialize, Serialize};
@@ -6,7 +6,6 @@ use serde::{Deserialize, Serialize};
 pub fn render_md_to_catalog() -> Result<Vec<MdInfo>> {
     let path = "assert/md/catalog.md";
     if let Ok(file) = std::fs::File::open(path) {
-        tracing::info!("file: {:?}", file);
         let reader = BufReader::new(file);
         let lines = reader.lines().skip(2);
         let mut md_info_vec = Vec::new();
@@ -40,6 +39,7 @@ pub fn render_md_to_html(name: &str) -> Result<MdContent> {
         let mut lines = reader.lines();
         let title = lines.next().unwrap().unwrap();
         let date = lines.next().unwrap().unwrap();
+        let _description = lines.next().unwrap().unwrap();
         let content = lines
             .map(|line| line.unwrap())
             .collect::<Vec<String>>()
@@ -50,6 +50,26 @@ pub fn render_md_to_html(name: &str) -> Result<MdContent> {
             date,
             content,
         })
+    } else {
+        Err(anyhow::anyhow!("文件打开失败"))
+    }
+}
+
+pub fn add_catalog_by_upload_file(filename: &str, path: &str) -> Result<()> {
+    if let Ok(file) = std::fs::File::open(path) {
+        let reader = BufReader::new(file);
+        let mut lines = reader.lines();
+        let title = lines.next().unwrap().unwrap();
+        let _date = lines.next().unwrap().unwrap();
+        let description = lines.next().unwrap().unwrap();
+        let catalog_path = "assert/md/catalog.md";
+        let mut catalog_file = std::fs::OpenOptions::new()
+            .append(true)
+            .open(catalog_path)
+            .unwrap();
+        let content = format!("| {} | {} | {} |\n", filename, title, description);
+        catalog_file.write_all(content.as_bytes())?;
+        Ok(())
     } else {
         Err(anyhow::anyhow!("文件打开失败"))
     }
@@ -86,5 +106,9 @@ pub struct MdContent {
 #[cfg(test)]
 mod tests {
     #[test]
-    fn create_catalog_file() {}
+    fn create_catalog_file() {
+        let path = "assert/md/index.md";
+        let result = super::add_catalog_by_upload_file(path);
+        assert!(result.is_ok());
+    }
 }
