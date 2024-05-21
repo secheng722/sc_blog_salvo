@@ -56,7 +56,10 @@ pub fn render_md_to_html(name: &str) -> Result<MdContent> {
 }
 
 pub fn add_catalog_by_upload_file(filename: &str, path: &str) -> Result<()> {
-    if let Ok(file) = std::fs::File::open(path) {
+    let md_path = format!("assert/md/{}.md", filename);
+    if let Ok(_file) = std::fs::File::open(md_path) {
+        Ok(())
+    } else if let Ok(file) = std::fs::File::open(path) {
         let reader = BufReader::new(file);
         let mut lines = reader.lines();
         let title = lines.next().unwrap().unwrap();
