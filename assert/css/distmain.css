@@ -1445,6 +1445,16 @@ video {
   color: rgb(55 48 163 / var(--tw-text-opacity));
 }
 
+.prose-th\:text-lg :is(:where(th):not(:where([class~="not-prose"],[class~="not-prose"] *))) {
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+}
+
+.prose-th\:text-gray-600 :is(:where(th):not(:where([class~="not-prose"],[class~="not-prose"] *))) {
+  --tw-text-opacity: 1;
+  color: rgb(75 85 99 / var(--tw-text-opacity));
+}
+
 .prose-img\:rounded-2xl :is(:where(img):not(:where([class~="not-prose"],[class~="not-prose"] *))) {
   border-radius: 1rem;
 }
@@ -1553,5 +1563,15 @@ video {
   .dark\:prose-li\:text-gray-400 :is(:where(li):not(:where([class~="not-prose"],[class~="not-prose"] *))) {
     --tw-text-opacity: 1;
     color: rgb(156 163 175 / var(--tw-text-opacity));
+  }
+
+  .dark\:prose-th\:text-gray-400 :is(:where(th):not(:where([class~="not-prose"],[class~="not-prose"] *))) {
+    --tw-text-opacity: 1;
+    color: rgb(156 163 175 / var(--tw-text-opacity));
+  }
+
+  .dark\:prose-th\:text-gray-300 :is(:where(th):not(:where([class~="not-prose"],[class~="not-prose"] *))) {
+    --tw-text-opacity: 1;
+    color: rgb(209 213 219 / var(--tw-text-opacity));
   }
 }
