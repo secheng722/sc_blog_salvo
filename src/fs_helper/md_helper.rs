@@ -44,7 +44,8 @@ pub fn render_md_to_html(name: &str) -> Result<MdContent> {
             .map(|line| line.unwrap())
             .collect::<Vec<String>>()
             .join("\n");
-        let content = markdown::to_html(&content);
+        let content = markdown::to_html_with_options(&content, &markdown::Options::gfm())
+            .map_err(|_| anyhow::anyhow!("Failed to convert markdown to html"))?;
         Ok(MdContent {
             title,
             date,
