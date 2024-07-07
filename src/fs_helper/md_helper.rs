@@ -107,10 +107,3 @@ pub struct MdContent {
     pub content: String,
 }
 
-#[cfg(test)]
-mod tests {
-    #[test]
-    fn create_catalog_file() {
-        let path = "assert/md/index.md";
-    }
-}
