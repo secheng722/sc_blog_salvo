@@ -8,7 +8,7 @@ pub async fn upload(req: &mut Request, res: &mut Response) {
     if let Some(file) = file {
         let path = file.path().to_str().unwrap();
         let filename = file.name().unwrap();
-        let keyname = filename.split('.').next().unwrap();
+        let keyname = filename.rsplitn(2, '.').skip(1).next().unwrap();
         if fs_helper::md_helper::add_catalog_by_upload_file(keyname, path).is_ok() {
             let dest = format!("assert/md/{}", filename);
             if let Err(e) = std::fs::copy(path, dest) {
